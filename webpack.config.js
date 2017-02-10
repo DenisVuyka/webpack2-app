@@ -3,7 +3,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-    entry: './index.ts',
+    // entry: './index.ts',
+    entry: './src/main.ts',
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist')
@@ -31,6 +32,13 @@ module.exports = {
         extensions: [".ts", ".js"]
     },
     plugins: [
+        // Workaround for angular/angular#11580
+        new webpack.ContextReplacementPlugin(
+            // The (\\|\/) piece accounts for path separators in *nix and Windows
+            /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+            path.resolve(__dirname, 'src'), // location of your src
+            {} // a map of your routes
+        ),
         new HtmlWebpackPlugin({
             template: 'index.html'
         }),
