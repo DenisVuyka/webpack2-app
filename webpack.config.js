@@ -1,5 +1,6 @@
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const path = require('path');
 
 module.exports = {
@@ -18,14 +19,36 @@ module.exports = {
             },
             {
                 enforce: 'pre',
-                test: /\.tsx?$/,
+                test: /\.ts$/,
                 use: "source-map-loader"
             },
             {
-                test: /\.tsx?$/,
-                loader: 'ts-loader',
+                test: /\.ts$/,
+                // loader: 'ts-loader',
+                use: [
+                    {
+                        loader: 'ts-loader'
+                    },
+                    {
+                        loader: 'angular2-template-loader'
+                    }
+                ],
                 exclude: /node_modules/,
             },
+            {
+                test: /\.html$/,
+                loader: 'html-loader'
+            },
+            {
+                test: /\.css$/,
+                exclude: path.resolve(__dirname, 'src/app'),
+                loader: ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css-loader?sourceMap' })
+            },
+            {
+                test: /\.css$/,
+                include: path.resolve(__dirname, 'src/app'),
+                loader: 'raw-loader'
+            }
         ]
     },
     resolve: {
