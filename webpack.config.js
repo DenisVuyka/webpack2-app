@@ -1,3 +1,5 @@
+const webpack = require("webpack");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
@@ -28,10 +30,22 @@ module.exports = {
     resolve: {
         extensions: [".ts", ".js"]
     },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: 'index.html'
+        }),
+        new webpack.EnvironmentPlugin({
+            NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
+            DEBUG: false
+        })
+    ],
     devtool: 'inline-source-map',
     devServer: {
-        // contentBase: path.join(__dirname, 'dist'),
+        contentBase: path.join(__dirname, 'dist'),
         compress: true,
-        port: 9000
+        port: 3000,
+        historyApiFallback: true,
+        host: '0.0.0.0',
+        inline: true
     }
 };
