@@ -20,6 +20,12 @@ module.exports = {
             {
                 enforce: 'pre',
                 test: /\.ts$/,
+                loader: 'tslint-loader',
+                exclude: [path.resolve(__dirname, 'node_modules')]
+            },
+            {
+                enforce: 'pre',
+                test: /\.ts$/,
                 use: "source-map-loader"
             },
             {

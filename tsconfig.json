@@ -11,5 +11,9 @@
         "suppressImplicitAnyIndexErrors": true,
         "outDir": "./dist/",
         "allowJs": true
-    }
+    },
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
 }
