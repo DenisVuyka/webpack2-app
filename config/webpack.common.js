@@ -1,6 +1,7 @@
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const helpers = require('./helpers');
 const path = require('path');
 
@@ -63,7 +64,7 @@ module.exports = {
     },
     resolve: {
         extensions: [".ts", ".js"],
-        // Needed is webpack2-lib is symlinked
+        // Needed if webpack2-lib is symlinked
         modules: [
             helpers.root('src'),
             helpers.root('node_modules'),
@@ -81,6 +82,14 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: 'src/index.html'
         }),
+
+        new CopyWebpackPlugin([
+            {
+                context: helpers.root('node_modules/webpack2-lib/dist/assets'),
+                from: '**/*',
+                to: helpers.root('dist/assets')
+            }
+        ]),
 
         new webpack.optimize.CommonsChunkPlugin({
             name: ['app', 'vendor', 'polyfills']
