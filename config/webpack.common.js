@@ -5,9 +5,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const helpers = require('./helpers');
 const path = require('path');
 
-console.log(path.resolve(__dirname, 'node_modules/webpack2-lib/dist'));
-const rootPath = helpers.root('node_modules');
-
 module.exports = {
     entry: {
         'polyfills': './src/polyfills.ts',
