@@ -2,6 +2,10 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const helpers = require('./helpers');
+const path = require('path');
+
+console.log(path.resolve(__dirname, 'node_modules/webpack2-lib/dist'));
+const rootPath = helpers.root('node_modules');
 
 module.exports = {
     entry: {
@@ -30,8 +34,10 @@ module.exports = {
             {
                 test: /\.ts$/,
                 use: [
-                    { loader: 'ts-loader' },
-                    { loader: 'angular2-template-loader' }
+                    'ts-loader',
+                    'angular2-template-loader'
+                    // { loader: 'ts-loader' },
+                    // { loader: 'angular2-template-loader' }
                 ],
                 exclude: /node_modules/,
             },
@@ -56,7 +62,13 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: [".ts", ".js"]
+        extensions: [".ts", ".js"],
+        // Needed is webpack2-lib is symlinked
+        modules: [
+            helpers.root('src'),
+            helpers.root('node_modules'),
+            helpers.root('node_modules/webpack2-lib/dist')
+        ]
     },
     plugins: [
         // Workaround for angular/angular#11580
