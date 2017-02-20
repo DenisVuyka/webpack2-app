@@ -21,7 +21,6 @@ module.exports = webpackMerge(commonConfig, {
         compress: true,
         port: 3000,
         historyApiFallback: true,
-        host: '0.0.0.0',
-        inline: true
+        host: '0.0.0.0'
     }
 });

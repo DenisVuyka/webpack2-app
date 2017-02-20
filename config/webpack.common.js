@@ -34,8 +34,6 @@ module.exports = {
                 use: [
                     'ts-loader',
                     'angular2-template-loader'
-                    // { loader: 'ts-loader' },
-                    // { loader: 'angular2-template-loader' }
                 ],
                 exclude: /node_modules/,
             },
@@ -46,13 +44,17 @@ module.exports = {
             {
                 test: /\.css$/,
                 exclude: helpers.root('src', 'app'),
-                loader: ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css-loader?sourceMap' })
+                loader: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: 'css-loader?sourceMap'
+                })
             },
             {
                 test: /\.css$/,
                 include: helpers.root('src', 'app'),
                 loader: 'raw-loader'
             },
+
             {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
                 loader: 'file-loader?name=assets/[name].[hash].[ext]'
